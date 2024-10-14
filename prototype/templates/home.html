@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    Hi {{ first_name }} {{ last_name }}!
+    Jouw username is: {{username}}
+    <p><a href="{% url 'password_change' %}">Password Change</a></p>
+
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Log Out</button>
+    </form>
+
+    <h3>Articles:</h3>
+    {% if articles %}
+        <ul>
+            {% for article in articles %}
+                <li>
+                    <h4>{{ article.title }}</h4>
+                    <small>Posted on: {{ article.created_at }}</small>
+                    <small>made by: {{article.author }}</small>
+                    <br>
+                    <a href="{% url 'article_detail' article.pk %}" class="button">View Details</a> 
+                    <hr>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No articles found.</p>
+    {% endif %}
+    
+    <a href="{% url 'article_create' %}" class="button">Add New Article</a>
+    
+
+{% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'signup' %}">Sign Up</a>
+    <a href="{% url 'login' %}">Log In</a>
+    <p><a href="{% url 'password_reset' %}">Password Reset</a></p>
+{% endif %}
+{% endblock %}

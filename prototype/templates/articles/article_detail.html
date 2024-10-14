@@ -1,0 +1,12 @@
+<!-- myapp/templates/articles/article_detail.html -->
+{% extends "base.html" %}
+
+{% block title %}Article Detail{% endblock %}
+
+{% block content %}
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.content }}</p>
+    <small>Posted on: {{ article.created_at }}</small></br>
+    <small>article by: {{article.author}}
+    <a href="{% url 'home' %}">Back to Articles</a>
+{% endblock %}
